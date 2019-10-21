@@ -1,13 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const keys = require('./config/keys');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
 require('./models/User');
 require('./services/passport');
+require('dotenv').config();
 
 mongoose.connect(
-  keys.mongoURI,
+  process.env.MONGO_URI,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -21,7 +21,7 @@ app.use(
   cookieSession({
     //Expire after 30days
     maxAge: 30 * 24 * 60 * 60 * 1000,
-    keys: [keys.cookieKey]
+    keys: [process.env.COOKIE_KEY]
   })
 );
 app.use(passport.initialize());
