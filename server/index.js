@@ -17,6 +17,7 @@ mongoose.connect(
 
 const app = express();
 
+//Middleware
 app.use(
   cookieSession({
     //Expire after 30days
