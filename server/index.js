@@ -6,7 +6,6 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 require('./models/User');
 require('./services/passport');
-require('dotenv').config();
 
 mongoose.connect(
   process.env.MONGO_URI,
