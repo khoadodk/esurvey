@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
 const bodyParser = require('body-parser');
-const cors = require('cors');
+
 require('./models/User');
 require('./services/passport');
 
@@ -20,7 +20,7 @@ const app = express();
 
 //Middleware
 app.use(bodyParser.json());
-app.use(cors());
+
 app.use(
   cookieSession({
     //Expire after 30days
