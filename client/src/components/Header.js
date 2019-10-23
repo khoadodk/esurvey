@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import StripePayment from './StripePayment';
 
-class Header extends Component {
-  renderContent() {
-    switch (this.props.auth) {
+const Header = ({ auth }) => {
+  const renderContent = () => {
+    switch (auth) {
       case null:
         return;
       case false:
@@ -15,31 +16,32 @@ class Header extends Component {
         );
       default:
         return (
-          <li>
-            <a href="/api/logout">Logout</a>
-          </li>
+          <div>
+            <li>
+              <StripePayment />
+            </li>
+            <li style={{ margin: '0 10px' }}>Credits: {auth.credits}</li>
+            <li>
+              <a href="/api/logout">Logout</a>
+            </li>
+          </div>
         );
     }
-  }
-  render() {
-    console.log(this.props);
-    return (
-      <nav>
-        <div className="nav-wrapper">
-          <Link
-            to={this.props.auth ? '/surveys' : '/'}
-            className="brand-logo left"
-          >
-            Esurvey
-          </Link>
-          <ul id="nav-mobile" className="right hide-on-med-and-down">
-            <li>{this.renderContent()}</li>
-          </ul>
-        </div>
-      </nav>
-    );
-  }
-}
+  };
+
+  return (
+    <nav>
+      <div className="nav-wrapper">
+        <Link to={auth ? '/surveys' : '/'} className="brand-logo left">
+          Esurvey
+        </Link>
+        <ul id="nav-mobile" className="right hide-on-med-and-down">
+          {renderContent()}
+        </ul>
+      </div>
+    </nav>
+  );
+};
 
 const mapStateToProps = ({ auth }) => ({
   auth

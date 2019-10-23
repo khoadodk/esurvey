@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'materialize-css/dist/css/materialize.min.css';
+
 //Components
 import App from './App';
 import reducers from './reducers/combineReducer';
