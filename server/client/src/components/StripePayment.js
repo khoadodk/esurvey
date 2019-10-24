@@ -6,7 +6,7 @@ import * as actions from '../actions/actions';
 const StripePayment = ({ handleToken }) => {
   return (
     <StripeCheckout
-      name="Esurvey"
+      name="eSurvey"
       description="$1 for 1 survey credit"
       amount={100}
       token={token => handleToken(token)}

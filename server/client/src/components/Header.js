@@ -33,7 +33,7 @@ const Header = ({ auth }) => {
     <nav>
       <div className="nav-wrapper">
         <Link to={auth ? '/surveys' : '/'} className="brand-logo left">
-          Esurvey
+          eSurvey
         </Link>
         <ul id="nav-mobile" className="right hide-on-med-and-down">
           {renderContent()}

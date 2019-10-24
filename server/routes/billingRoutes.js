@@ -1,12 +1,13 @@
 require('dotenv').config();
+const requireLogin = require('../middlewares/requireLogin');
 
 const key = process.env.STRIPE_SECRET_KEY;
 const stripe = require('stripe')(key);
 
 module.exports = app => {
-  app.post('/api/stripe', async (req, res) => {
+  app.post('/api/stripe', requireLogin, async (req, res) => {
     //user not logged in
-    if (!req.user) return res.status(401).send({ error: 'You must log in!' });
+
     const charge = await stripe.charges.create({
       amount: 100,
       currency: 'usd',

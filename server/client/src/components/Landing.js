@@ -4,7 +4,7 @@ class Landing extends Component {
   render() {
     return (
       <div style={{ textAlign: 'center' }}>
-        <h1>Esurvey</h1>
+        <h1>eSurvey</h1>
         Collect feedback from your users
       </div>
     );
