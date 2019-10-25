@@ -1,8 +1,7 @@
-require('dotenv').config();
-const requireLogin = require('../middlewares/requireLogin');
-
 const key = process.env.STRIPE_SECRET_KEY;
 const stripe = require('stripe')(key);
+const requireLogin = require('../middlewares/requireLogin');
+require('dotenv').config();
 
 module.exports = app => {
   app.post('/api/stripe', requireLogin, async (req, res) => {

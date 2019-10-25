@@ -1,16 +1,16 @@
 const express = require('express');
+const app = express();
+const cors = require('cors');
 const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
 const bodyParser = require('body-parser');
+require('dotenv').config();
+
 //Models
 require('./models/User');
 require('./models/Survey');
 require('./services/passport');
-//Routes
-require('./routes/authRoutes')(app);
-require('./routes/billingRoutes')(app);
-require('./routes/surveyRoutes')(app);
 
 mongoose.connect(
   process.env.MONGO_URI,
@@ -21,11 +21,9 @@ mongoose.connect(
   () => console.log('Connected to MongoDB!')
 );
 
-const app = express();
-
 //Middleware
+app.use(cors());
 app.use(bodyParser.json());
-
 app.use(
   cookieSession({
     //Expire after 30days
@@ -36,6 +34,12 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+//Routes
+require('./routes/authRoutes')(app);
+require('./routes/billingRoutes')(app);
+require('./routes/surveyRoutes')(app);
+
+//heroku production environment setup
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
   const path = require('path');

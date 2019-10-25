@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import StripePayment from './StripePayment';
 
 const Header = ({ auth }) => {
+  console.log(auth);
   const renderContent = () => {
     switch (auth) {
       case null:
