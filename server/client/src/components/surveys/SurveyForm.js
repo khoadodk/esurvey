@@ -6,9 +6,10 @@ import validateEmails from '../../utils/validateEmails';
 
 class SurveyForm extends Component {
   render() {
+    const { handleSubmit, onSurveySubmit } = this.props;
     return (
       <div>
-        <form onSubmit={this.props.handleSubmit(value => console.log(value))}>
+        <form onSubmit={handleSubmit(onSurveySubmit)}>
           <Field
             label="Survey Title"
             type="text"
@@ -30,7 +31,7 @@ class SurveyForm extends Component {
           <Field
             label="Recipient List"
             type="text"
-            name="email"
+            name="recipients"
             component={SurveyField}
           />
           <Link to="/surveys" className="pink btn-flat left white-text">
@@ -53,12 +54,14 @@ const validate = values => {
   if (!values.subject) errors.subject = 'A subject is required';
   if (!values.body) errors.body = 'A body is required';
   //validate emails from util/validateEmails
-  errors.email = validateEmails(values.email || '');
-  if (!values.email) errors.email = 'An email is required';
+  errors.recipients= validateEmails(values.recipients || '');
+  if (!values.recipients) errors.recipients = 'An email is required';
   return errors;
 };
 
 export default reduxForm({
   form: 'surveyForm',
-  validate
+  validate,
+  //persist the input values
+  destroyOnUnmount: false
 })(SurveyForm);

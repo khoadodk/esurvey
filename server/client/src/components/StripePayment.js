@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
 
 const StripePayment = ({ handleToken }) => {
-  console.log(process.env);
   return (
     <StripeCheckout
       name="eSurvey"

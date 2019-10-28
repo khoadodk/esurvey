@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import StripePayment from './StripePayment';
 
 const Header = ({ auth }) => {
-  console.log(auth);
   const renderContent = () => {
     switch (auth) {
       case null:
@@ -32,7 +31,7 @@ const Header = ({ auth }) => {
 
   return (
     <nav>
-      <div className="nav-wrapper">
+      <div className="blue darken-2 nav-wrapper">
         <Link
           to={auth ? '/surveys' : '/'}
           className="brand-logo left hide-on-small-and-down"
