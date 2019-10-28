@@ -33,10 +33,13 @@ const Header = ({ auth }) => {
   return (
     <nav>
       <div className="nav-wrapper">
-        <Link to={auth ? '/surveys' : '/'} className="brand-logo left">
+        <Link
+          to={auth ? '/surveys' : '/'}
+          className="brand-logo left hide-on-small-and-down"
+        >
           eSurvey
         </Link>
-        <ul id="nav-mobile" className="right hide-on-med-and-down">
+        <ul id="nav-mobile" className="right">
           {renderContent()}
         </ul>
       </div>

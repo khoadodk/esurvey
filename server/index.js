@@ -21,9 +21,11 @@ mongoose.connect(
   () => console.log('Connected to MongoDB!')
 );
 
-//Middleware
+//Middlewares
 app.use(cors());
 app.use(bodyParser.json());
+
+// we want to tell passport to use cookies to keep track of the user's session/authentication state.
 app.use(
   cookieSession({
     //Expire after 30days
@@ -31,6 +33,7 @@ app.use(
     keys: [process.env.COOKIE_KEY]
   })
 );
+//tell passport to use cookieSession and peristent login session
 app.use(passport.initialize());
 app.use(passport.session());
 
