@@ -12,11 +12,18 @@ const requireLogin = require('../middlewares/requireLogin');
 const requireCredits = require('../middlewares/requireCredits');
 
 module.exports = app => {
+  app.get('/api/surveys/', requireLogin, async (req, res) => {
+    const surveys = await Survey.find({ _user: req.user.id }).select({
+      recipients: false
+    });
+    res.send(surveys);
+  });
+
   app.get('/api/surveys/:surveyId/:choice', (req, res) => {
     res.send(`
     <html>
       <body>
-        <div style="text-align: center">
+        <div style="text-align: center; font-weight: bolder">
           Thank you for your input!
         </div>
       </body>
