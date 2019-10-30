@@ -10,11 +10,11 @@ module.exports = app => {
     const charge = await stripe.charges.create({
       amount: 100,
       currency: 'usd',
-      description: '$1 for 1 survey credit',
+      description: '$10 for 10 survey credits',
       source: req.body.id
     });
     //receive the payment and send credit to user
-    req.user.credits += 1;
+    req.user.credits += 10;
     const user = await req.user.save();
     res.send(user);
   });

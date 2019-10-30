@@ -7,8 +7,8 @@ const StripePayment = ({ handleToken }) => {
   return (
     <StripeCheckout
       name="eSurvey"
-      description="$1 for 1 survey credit"
-      amount={100}
+      description="$10 for 10 survey credits"
+      amount={1000}
       token={token => handleToken(token)}
       stripeKey={process.env.REACT_APP_STRIPE_KEY}
     >

@@ -1,3 +1,7 @@
+const _ = require('lodash');
+const Path = require('path-parser').default;
+const { URL } = require('url');
+
 const mongoose = require('mongoose');
 const Survey = mongoose.model('surveys');
 
@@ -8,8 +12,51 @@ const requireLogin = require('../middlewares/requireLogin');
 const requireCredits = require('../middlewares/requireCredits');
 
 module.exports = app => {
-  app.get('/api/surveys/thanks', (req, res) => {
-    res.send('Thank you for your input');
+  app.get('/api/surveys/:surveyId/:choice', (req, res) => {
+    res.send(`
+    <html>
+      <body>
+        <div style="text-align: center">
+          Thank you for your input!
+        </div>
+      </body>
+    </html>
+    `);
+  });
+
+  app.post('/api/surveys/webhooks', (req, res) => {
+    const p = new Path('/api/surveys/:surveyId/:choice');
+    //Extract the surveyId and choice using library url, path-parser
+    const events = _.chain(req.body)
+      .map(({ email, url }) => {
+        const match = p.test(new URL(url).pathname);
+        if (match) {
+          return { email, surveyId: match.surveyId, choice: match.choice };
+        }
+      })
+      //remove undefined events
+      .compact()
+      //remove repeated events in case users clicks yes/no multiple times
+      .uniqBy('email', 'surveyId')
+      //find and update the email and increment the answer(yes/no) by 1, return the responded to true
+      .each(({ surveyId, email, choice }) => {
+        Survey.updateMany(
+          {
+            _id: surveyId,
+            recipients: {
+              $elemMatch: { email: email, responded: false }
+            }
+          },
+          {
+            $inc: { [choice]: 1 },
+            $set: { 'recipients.$.responded': true },
+            lastResponded: new Date()
+          }
+        ).exec();
+      })
+      //obtain the value of events
+      .value();
+    res.send({});
   });
 
   app.post('/api/surveys', requireLogin, requireCredits, async (req, res) => {
