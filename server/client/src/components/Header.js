@@ -31,7 +31,7 @@ const Header = ({ auth }) => {
 
   return (
     <nav>
-      <div className="blue darken-2 nav-wrapper">
+      <div className="blue darken-3 nav-wrapper">
         <Link
           to={auth ? '/surveys' : '/'}
           className="brand-logo left hide-on-small-and-down"
